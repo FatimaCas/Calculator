@@ -4,11 +4,12 @@
  */
 package core.controllers;
 
-import calculator.Calculator;
+import core.models.Calculator;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.History;
 import core.models.Operation;
+import core.models.storage.Storage;
 
 /**
  *
@@ -46,9 +47,9 @@ public class AddController {
                 return new Response("Numbers must be numeric", Status.BAD_REQUEST);
             }
             Calculator calculator = new Calculator();
-            History history = new History();
+            Storage storage = Storage.getInstance();
             Operation operation = new Operation(num1, num2, "+", calculator.add(num1, num2));
-            history.addOperation(operation);
+            storage.addOperation(operation);
             return new Response("Successful operation", Status.OK, operation);
         } catch (Exception ex) {
             return new Response("Unexpected error", Status.INTERNAL_SERVER_ERROR);

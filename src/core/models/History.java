@@ -5,25 +5,28 @@
 package core.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import javax.swing.DefaultListModel;
 
 /**
  *
  * @author edangulo
  */
 public class History {
-    
+
     private ArrayList<Operation> operations;
 
-    public History() {
-        this.operations = new ArrayList<>();
-    }
-    
-    public void addOperation(Operation operation) {
-        this.operations.add(operation);
+    public History(ArrayList<Operation> storage) {
+        this.operations = storage;
     }
 
-    public ArrayList<Operation> getOperations() {
-        return operations;
+    public DefaultListModel history() {
+        ArrayList<Operation> operationHistory = this.operations;
+        Collections.reverse(this.operations);
+
+        DefaultListModel model = new DefaultListModel();
+        model.addAll(operationHistory);
+        
+        return model;
     }
-    
 }
