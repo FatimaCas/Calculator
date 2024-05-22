@@ -19,7 +19,7 @@ public class History {
     public History(ArrayList<Operation> storage) {
         this.operations = storage;
     }
-
+    //Da el historial de operaciones
     public DefaultListModel history() {
         ArrayList<Operation> operationHistory = this.operations;
         Collections.reverse(this.operations);

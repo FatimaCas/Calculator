@@ -8,6 +8,7 @@ import core.models.Calculator;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.Operation;
+import core.models.operations.SubtractOperation;
 import core.models.storage.Storage;
 
 /**
@@ -46,7 +47,7 @@ public class SubtractController {
             }
             Calculator calculator = new Calculator();
             Storage storage = Storage.getInstance();
-            Operation operation = new Operation(num1, num2, "-", calculator.subtract(num1, num2));
+            Operation operation = new Operation(num1, num2, "-", calculator.result(SubtractOperation.subtract(num1, num2)));
             storage.addOperation(operation);
             return new Response("Successful operation", Status.OK, operation);
         }catch (Exception ex) {

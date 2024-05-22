@@ -22,6 +22,11 @@ public class Storage {
     private Storage() {
         this.operations = new ArrayList<>();
     }
+    
+    public void addOperation(Operation operation) {
+        this.operations.add(operation);
+    }
+    
     public static Storage getInstance() {
         if (instance == null) {
             instance = new Storage();
@@ -29,10 +34,6 @@ public class Storage {
         return instance;
     }
     
-    public void addOperation(Operation operation) {
-        this.operations.add(operation);
-    }
-
     public ArrayList<Operation> getOperations() {
         return operations;
     }

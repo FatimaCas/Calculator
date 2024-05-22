@@ -8,6 +8,7 @@ import core.models.Calculator;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.Operation;
+import core.models.operations.DivideOperation;
 import core.models.storage.Storage;
 
 /**
@@ -51,7 +52,7 @@ public class DivideController {
             if (num2 == 0) {
                 operation = new Operation(num1, num2, "/", "Infinity");
             } else {
-                operation = new Operation(num1, num2, "/", calculator.divide(num1, num2));
+                operation = new Operation(num1, num2, "/", calculator.result(DivideOperation.divide(num1,num2)));
             }
             storage.addOperation(operation);
             return new Response("Successful operation", Status.OK, operation);

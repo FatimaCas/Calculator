@@ -8,6 +8,7 @@ import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.Calculator;
 import core.models.Operation;
+import core.models.operations.PotencyOperation;
 import core.models.storage.Storage;
 
 /**
@@ -46,7 +47,7 @@ public class PotencyController {
             }
             Calculator calculator = new Calculator();
             Storage storage = Storage.getInstance();
-            Operation operation = new Operation(num1, num2, "^", calculator.potency(num1, num2));
+            Operation operation = new Operation(num1, num2, "^", calculator.result(PotencyOperation.potency(num1, num2)));
             storage.addOperation(operation);
             return new Response("Successful operation", Status.OK, operation);
         } catch (Exception ex) {

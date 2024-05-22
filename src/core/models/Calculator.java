@@ -11,25 +11,11 @@ import java.text.DecimalFormat;
  * @author edangulo
  */
 public class Calculator {
+    
     DecimalFormat df = new DecimalFormat("#.###");
     
-    public String add(double a, double b) {
-        return df.format(a + b);
-    }
-    
-    public String subtract(double a, double b) {
-        return df.format(a - b);
-    }
-    
-    public String multiply(double a, double b) {
-        return df.format(a * b);
-    }
-    
-    public String divide(double a, double b) {
-        return df.format(a / b);
-    }
-    
-    public String potency(double a , double b){
-        return df.format(Math.pow(a, b));
+    //Da el resultado de las operaciones con el formato de máximo tres decimales
+    public String result(double result){
+        return df.format(result);
     }
 }

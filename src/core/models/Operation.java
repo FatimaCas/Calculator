@@ -14,7 +14,6 @@ public class Operation {
     private double number2;
     private String operator;
     private String result;
-    private String infinity;
 
     public Operation(double number1, double number2, String operator, String result) {
         this.number1 = number1;
