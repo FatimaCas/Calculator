@@ -2,40 +2,38 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package core.models.storage;
+package core.models.history;
 
-import core.models.Operation;
 import java.util.ArrayList;
 
 /**
  *
- * @author USER
+ * @author edangulo
  */
-public class Storage {
-
-    // Instancia Singleton
-    private static Storage instance;
-
-    // Atributos del Storage
+public class History {
+    
+    private static History instance;
     private ArrayList<Operation> operations;
 
-    private Storage() {
+    public History(){
         this.operations = new ArrayList<>();
     }
     
+    //Method of the class
     public void addOperation(Operation operation) {
         this.operations.add(operation);
     }
     
-    public static Storage getInstance() {
+    //Getter
+    public static History getInstance() {
         if (instance == null) {
-            instance = new Storage();
+            instance = new History();
         }
         return instance;
     }
     
+    //Getter
     public ArrayList<Operation> getOperations() {
         return operations;
     }
-    
 }

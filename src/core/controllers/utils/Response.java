@@ -4,9 +4,6 @@
  */
 package core.controllers.utils;
 
-import core.models.History;
-import core.models.Operation;
-
 /**
  *
  * @author USER
@@ -15,26 +12,19 @@ public class Response {
        
     private String message;
     private int status;
-    private Operation object;
-    private History history;
+    private Object object;
 
     public Response(String message, int status) {
         this.message = message;
         this.status = status;
     }
     
-    public Response(String message, int status, Operation object) {
+    public Response(String message, int status, Object object) {
         this.message = message;
         this.status = status;
         this.object = object;
     }
     
-    public Response(String message, int status, History history) {
-        this.message = message;
-        this.status = status;
-        this.history = history;
-    }
-
     public String getMessage() {
         return message;
     }
@@ -43,12 +33,8 @@ public class Response {
         return status;
     }
 
-    public Operation getObject() {
+    public Object getObject() {
         return this.object;
-    }
-
-    public History getHistory() {
-        return history;
     }
     
 }
