@@ -8,11 +8,12 @@ import core.controllers.AddController;
 import core.controllers.DivideController;
 import core.controllers.HistoryController;
 import core.controllers.MultiplyController;
-import core.controllers.PotencyController;
+import core.controllers.ExponentiationController;
 import core.controllers.SubtractController;
 import core.controllers.utils.Response;
-import core.models.History;
+import core.models.history.History;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 
 /**
  *
@@ -38,12 +39,12 @@ public class CalculatorFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
         subtractButton = new javax.swing.JButton();
         multiplyButton = new javax.swing.JButton();
         divideButton = new javax.swing.JButton();
-        potencyButton = new javax.swing.JButton();
+        exponentiateButton = new javax.swing.JButton();
         clearNumbersButton = new javax.swing.JButton();
         updateHistoryButton = new javax.swing.JButton();
         number1TextField = new javax.swing.JTextField();
@@ -57,8 +58,8 @@ public class CalculatorFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Calculator");
+        titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        titleLabel.setText("Calculator");
 
         addButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         addButton.setText("Add");
@@ -92,11 +93,11 @@ public class CalculatorFrame extends javax.swing.JFrame {
             }
         });
 
-        potencyButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        potencyButton.setText("Potency");
-        potencyButton.addActionListener(new java.awt.event.ActionListener() {
+        exponentiateButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        exponentiateButton.setText("Potency");
+        exponentiateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                potencyButtonActionPerformed(evt);
+                exponentiateButtonActionPerformed(evt);
             }
         });
 
@@ -158,7 +159,7 @@ public class CalculatorFrame extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(potencyButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(exponentiateButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(multiplyButton, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
                             .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(15, 15, 15)
@@ -172,14 +173,14 @@ public class CalculatorFrame extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(188, 188, 188)
-                .addComponent(jLabel1)
+                .addComponent(titleLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(titleLabel)
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -204,7 +205,7 @@ public class CalculatorFrame extends javax.swing.JFrame {
                             .addComponent(divideButton)
                             .addComponent(multiplyButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(potencyButton)
+                        .addComponent(exponentiateButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(clearNumbersButton))
                     .addComponent(jScrollPane1))
@@ -227,7 +228,7 @@ public class CalculatorFrame extends javax.swing.JFrame {
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            resultTextField.setText("" + response.getObject().getResult());
+            resultTextField.setText("" + response.getObject());
             JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
         }
 
@@ -246,7 +247,7 @@ public class CalculatorFrame extends javax.swing.JFrame {
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            resultTextField.setText("" + response.getObject().getResult());
+            resultTextField.setText("" + response.getObject());
             JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
         }
 
@@ -264,7 +265,7 @@ public class CalculatorFrame extends javax.swing.JFrame {
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            resultTextField.setText("" + response.getObject().getResult());
+            resultTextField.setText("" + response.getObject());
             JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_multiplyButtonActionPerformed
@@ -281,27 +282,27 @@ public class CalculatorFrame extends javax.swing.JFrame {
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            resultTextField.setText("" + response.getObject().getResult());
+            resultTextField.setText("" + response.getObject());
             JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_divideButtonActionPerformed
 
-    private void potencyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_potencyButtonActionPerformed
+    private void exponentiateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exponentiateButtonActionPerformed
         // TODO add your handling code here:
         String number1 = number1TextField.getText();
         String number2 = number2TextField.getText();
 
-        Response response = PotencyController.potencyNumbers(number1, number2);
+        Response response = ExponentiationController.potencyNumbers(number1, number2);
 
         if (response.getStatus() >= 500) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            resultTextField.setText("" + response.getObject().getResult());
+            resultTextField.setText("" + response.getObject());
             JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
         }
-    }//GEN-LAST:event_potencyButtonActionPerformed
+    }//GEN-LAST:event_exponentiateButtonActionPerformed
 
     private void clearNumbersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearNumbersButtonActionPerformed
         // TODO add your handling code here:
@@ -319,7 +320,7 @@ public class CalculatorFrame extends javax.swing.JFrame {
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            historyList.setModel(response.getHistory().history());
+            historyList.setModel((ListModel<String>) response.getObject());
             JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
         }
 
@@ -330,8 +331,8 @@ public class CalculatorFrame extends javax.swing.JFrame {
     private javax.swing.JButton addButton;
     private javax.swing.JButton clearNumbersButton;
     private javax.swing.JButton divideButton;
+    private javax.swing.JButton exponentiateButton;
     private javax.swing.JList<String> historyList;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -339,9 +340,9 @@ public class CalculatorFrame extends javax.swing.JFrame {
     private javax.swing.JButton multiplyButton;
     private javax.swing.JTextField number1TextField;
     private javax.swing.JTextField number2TextField;
-    private javax.swing.JButton potencyButton;
     private javax.swing.JTextField resultTextField;
     private javax.swing.JButton subtractButton;
+    private javax.swing.JLabel titleLabel;
     private javax.swing.JButton updateHistoryButton;
     // End of variables declaration//GEN-END:variables
 }

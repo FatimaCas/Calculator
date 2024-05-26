@@ -7,9 +7,9 @@ package core.controllers;
 import core.models.Calculator;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
-import core.models.Operation;
-import core.models.operations.SubtractOperation;
-import core.models.storage.Storage;
+import core.models.history.History;
+import core.models.history.Operation;
+import core.models.operators.Substraction;
 
 /**
  *
@@ -45,11 +45,18 @@ public class SubtractController {
             } catch (NumberFormatException ex) {
                 return new Response("Numbers must be numeric", Status.BAD_REQUEST);
             }
-            Calculator calculator = new Calculator();
-            Storage storage = Storage.getInstance();
-            Operation operation = new Operation(num1, num2, "-", calculator.result(SubtractOperation.subtract(num1, num2)));
-            storage.addOperation(operation);
-            return new Response("Successful operation", Status.OK, operation);
+            
+            //Valid inputs: do the operation
+            String result = String.format("%.3f",Calculator.calculate(new Substraction(), num1, num2));
+            
+            //Create the register of the operation
+            Operation operation = new Operation(num1, num2, "-", result);
+            
+            //Add it to the history
+            History history = History.getInstance();
+            history.addOperation(operation);
+            
+            return new Response("Successful operation", Status.OK, result);
         }catch (Exception ex) {
             return new Response("Unexpected error", Status.INTERNAL_SERVER_ERROR);
         }

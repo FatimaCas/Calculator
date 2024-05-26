@@ -7,9 +7,9 @@ package core.controllers;
 import core.models.Calculator;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
-import core.models.Operation;
-import core.models.operations.DivideOperation;
-import core.models.storage.Storage;
+import core.models.history.History;
+import core.models.history.Operation;
+import core.models.operators.Division;
 
 /**
  *
@@ -20,7 +20,6 @@ public class DivideController {
     public static Response divideNumbers(String number1, String number2) {
         try {
             double num1, num2;
-            Operation operation;
             String[] decimales;
             if (number1.isEmpty()) {
                 return new Response("Number 1 must be not empty", Status.BAD_REQUEST);
@@ -47,15 +46,18 @@ public class DivideController {
             } catch (NumberFormatException ex) {
                 return new Response("Numbers must be numeric", Status.BAD_REQUEST);
             }
-            Calculator calculator = new Calculator();
-            Storage storage = Storage.getInstance();
-            if (num2 == 0) {
-                operation = new Operation(num1, num2, "/", "Infinity");
-            } else {
-                operation = new Operation(num1, num2, "/", calculator.result(DivideOperation.divide(num1,num2)));
-            }
-            storage.addOperation(operation);
-            return new Response("Successful operation", Status.OK, operation);
+            
+            //Valid inputs: do the operation
+            String result = (num2 == 0) ? "Infinity" : String.format("%.3f",Calculator.calculate(new Division(), num1, num2));
+            
+            //Create the register of the operation
+            Operation operation = new Operation(num1, num2, "/", result);
+
+            //Add it to the history
+            History history = History.getInstance();
+            history.addOperation(operation);
+            
+            return new Response("Successful operation", Status.OK, result);
         } catch (Exception ex) {
             return new Response("Unexpected error", Status.INTERNAL_SERVER_ERROR);
         }

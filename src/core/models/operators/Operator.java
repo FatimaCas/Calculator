@@ -2,14 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package core.models.operations;
+package core.models.operators;
 
 /**
  *
- * @author USER
+ * @author Fla_Borja_Cantillo
  */
-public class DivideOperation {
-    public static double divide(double number1, double number2){
-       return (number1/number2);
-    }
+public abstract class Operator {
+    public abstract double evaluate(double a, double b);
 }

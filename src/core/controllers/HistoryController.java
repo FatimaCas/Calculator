@@ -6,8 +6,11 @@ package core.controllers;
 
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
-import core.models.History;
-import core.models.storage.Storage;
+import core.models.history.History;
+import core.models.history.Operation;
+import java.util.ArrayList;
+import java.util.Collections;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -17,12 +20,21 @@ public class HistoryController {
 
     public static Response updateHistory() {
         try {
-            Storage storage = Storage.getInstance();
-            if(storage.getOperations().isEmpty()){
+            History history = History.getInstance();
+            if (history.getOperations().isEmpty()) {
                 return new Response("There is no history", Status.NOT_FOUND);
             }
-            History history = new History(storage.getOperations());
-            return new Response("History updated", Status.OK, history);
+            
+            //History's not empty: prepare it and send it to the view
+            
+            //First declare a COPY of the List that belongs to history, so the original one does not get reversed
+            ArrayList<Operation> operationHistory = new ArrayList<>(history.getOperations()); 
+            Collections.reverse(operationHistory);
+
+            DefaultListModel model = new DefaultListModel();
+            model.addAll(operationHistory);
+            
+            return new Response("History updated", Status.OK, model);
         } catch (Exception ex) {
             return new Response("Unexpected error", Status.INTERNAL_SERVER_ERROR);
         }
